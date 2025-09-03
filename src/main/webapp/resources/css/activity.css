@@ -1,0 +1,265 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap");
+
+/* --- Root Variables for Theming --- */
+:root {
+  --bg-color: #f4f6f9;
+  --card-bg-color: #ffffff;
+  --text-color: #333;
+  --subtext-color: #666;
+  --border-color: #e0e0e0;
+  --primary-color: #2196f3;
+  --accent-color: #ff9800;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* --- Dark Mode Theme --- */
+.dark-mode {
+  --bg-color: #121212;
+  --card-bg-color: #1e1e1e;
+  --text-color: #e0e0e0;
+  --subtext-color: #a0a0a0;
+  --border-color: #333;
+}
+
+/* --- General Body and Layout Styles --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  background-image: url('../images/activity.png'); /* Relative path for external CSS */
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  transition: background-color 0.3s, color 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.main-container {
+  width: 100%;
+  max-width: 900px;
+}
+
+/* --- Header, Badge, and Theme Toggle --- */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+.productivity-chart-container {
+  width: 150px;
+  height: 150px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.badge {
+  background: #424242;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.dark-mode .badge { background: #333; }
+.badge:hover { background: #616161; }
+
+.theme-switch-wrapper { display: flex; align-items: center; }
+.theme-switch { display: inline-block; height: 34px; position: relative; width: 60px; }
+.theme-switch input { display:none; }
+.slider { background-color: #ccc; bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s; }
+.slider:before { background-color: #fff; bottom: 4px; content: ""; height: 26px; left: 4px; position: absolute; transition: .4s; width: 26px; }
+input:checked + .slider { background-color: var(--primary-color); }
+input:checked + .slider:before { transform: translateX(26px); }
+.slider.round { border-radius: 34px; }
+.slider.round:before { border-radius: 50%; }
+
+/* --- Section and Card Styles --- */
+.tasks-section {
+    padding: 0;
+    background: none;
+    box-shadow: none;
+    border: none;
+    margin-bottom: 40px;
+}
+
+.streak-section, .yearly-graph-section, .completed-tasks-section {
+  background: var(--card-bg-color);
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: var(--box-shadow);
+  width: 100%;
+  border: 1px solid var(--border-color);
+  margin-bottom: 40px;
+}
+
+.streak-section h2, .yearly-graph-section h2, .completed-tasks-section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+
+/* --- Task Card Specifics --- */
+.task-card {
+  background: var(--card-bg-color);
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  box-shadow: var(--box-shadow);
+  border: 1px solid var(--border-color);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.task-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-weight: 600;
+  font-size: 1.1em;
+  cursor: pointer;
+}
+
+.task-title { flex-grow: 1; }
+.task-toggle-icon { transition: transform 0.3s; }
+.task-toggle-icon.collapsed { transform: rotate(-90deg); }
+
+.progress-container {
+  height: 8px;
+  background: #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-bar { height: 100%; background: var(--accent-color); }
+.deadline { font-size: 13px; color: var(--subtext-color); }
+
+.add-task-btn {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  background: var(--primary-color);
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.add-task-btn:hover { background: #1976d2; }
+
+/* --- Subtask Styles --- */
+.subtasks-section {
+    margin-top: 20px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 15px;
+    transition: max-height 0.5s ease-in-out, opacity 0.5s;
+    max-height: 500px;
+    opacity: 1;
+    overflow: hidden;
+}
+
+.subtasks-section.hidden {
+    max-height: 0;
+    opacity: 0;
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+}
+
+.subtasks-header { font-weight: 600; margin-bottom: 10px; color: var(--subtext-color); }
+.subtasks-list { display: flex; flex-direction: column; gap: 8px; }
+.subtask { display: flex; align-items: center; gap: 10px; }
+.subtask label { flex-grow: 1; }
+
+.add-subtask-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.add-subtask-input {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.add-subtask-button {
+    padding: 8px 15px;
+    border: none;
+    background: var(--primary-color);
+    color: #fff;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* --- Custom Dotted Checkbox --- */
+.subtask input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--subtext-color);
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+}
+
+.subtask input[type="checkbox"]:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.subtask input[type="checkbox"]:checked::after {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 8px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* --- Streak Calendar (Streak Box) Styles --- */
+.streak-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; }
+.month-streak { text-align: center; }
+.month-streak h3 { font-size: 16px; margin-bottom: 10px; }
+.calendar { display: grid; grid-template-columns: repeat(7, 20px); gap: 4px; width: calc(7 * 20px + 6 * 4px); margin: 0 auto; }
+.day { width: 20px; height: 20px; background: var(--border-color); border-radius: 3px; }
+.day.active { background: #4caf50; }
+
+/* --- Completed Tasks Table Styles --- */
+.task-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+.task-table th, .task-table td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+.task-table th { background-color: var(--bg-color); font-weight: 600; }
+.task-table tr:last-child td { border-bottom: none; }
