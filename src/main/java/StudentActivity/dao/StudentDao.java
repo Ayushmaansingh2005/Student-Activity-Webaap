@@ -21,7 +21,7 @@ public class StudentDao {
     }
 
     public Student FindPassword(String email){
-        String hql = "From student where email = :email";
+        String hql = "FROM Student WHERE email = :email";
         List<Student> studentList = (List<Student>) hibernateTemplate.findByNamedParam(hql,"email",email);
         if(studentList!=null && !studentList.isEmpty()){
             return studentList.get(0);

@@ -2,7 +2,9 @@ package StudentActivity.controller;
 
 
 import StudentActivity.Model.Student;
+import StudentActivity.dto.LoginDto;
 import StudentActivity.dto.RegistratioDto;
+import StudentActivity.studentService.LoginService;
 import StudentActivity.studentService.RegistrationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,8 +21,12 @@ import org.springframework.web.servlet.view.RedirectView;
 public class MainController {
     @Autowired
     private PasswordEncoder passwordEncoder ;
+
     @Autowired
     private RegistrationService registrationService;
+
+    @Autowired
+    private LoginService loginService;
 
     @RequestMapping({"/", "/homePage"})
     public String index() {
@@ -59,16 +65,20 @@ public class MainController {
     }
 
 
-//    public String handleLogin{
-//
-//
-//
-//    }
+    @RequestMapping(value = "handle_login",method = RequestMethod.POST)
+    public String handleLogin(@ModelAttribute LoginDto loginDto , Model model){
+        if(loginService.login(loginDto)){
+            return "activity";
+        }
+        model.addAttribute("error","Wrong email or password try again !!!");
+        return "index";
 
-//    @RequestMapping("/activity")
-//    public String activityCenter(){
-//        return "activity";
-//    }
+    }
+
+    @RequestMapping("/activity")
+    public String activityCenter(){
+        return "activity";
+    }
 //
 //    @RequestMapping("/addtask")
 //    public String addTask(){
