@@ -43,7 +43,7 @@
             </div>
         </div>
       </div>
-      <button class="add-task-btn" onclick="window.location.href='<c:url value="/tasks/new" />'">+ Add New Task</button>
+      <button class="add-task-btn" onclick="window.location.href='<c:url value='/addTask' />'">+ Add New Task</button>
     </div>
     <div class="streak-section">
       <h2>Yearly Activity Streak</h2>

@@ -8,6 +8,7 @@ import StudentActivity.studentService.LoginService;
 import StudentActivity.studentService.RegistrationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -66,24 +67,19 @@ public class MainController {
 
 
     @RequestMapping(value = "handle_login",method = RequestMethod.POST)
-    public String handleLogin(@ModelAttribute LoginDto loginDto , Model model){
-        if(loginService.login(loginDto)){
+    public String handleLogin(
+            @ModelAttribute LoginDto loginDto ,
+            Model model ,
+            HttpSession session
+            ){
+        Student loggedin =  loginService.login(loginDto);
+
+        if(loggedin!=null){
+            session.setAttribute("currentUser",loggedin);
             return "activity";
         }
         model.addAttribute("error","Wrong email or password try again !!!");
         return "index";
 
     }
-
-    @RequestMapping("/activity")
-    public String activityCenter(){
-        return "activity";
-    }
-//
-//    @RequestMapping("/addtask")
-//    public String addTask(){
-//        return "addTask";
-//    }
-
-
 }

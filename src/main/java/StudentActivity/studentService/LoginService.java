@@ -16,15 +16,15 @@ public class LoginService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public boolean login(LoginDto logindto){
+    public Student login(LoginDto logindto){
 
         Student originalstudent = this.studentDao.FindPassword(logindto.getEmail());
 
-        if(originalstudent==null){
-            return false;
+        if(originalstudent!=null && passwordEncoder.matches( logindto.getPassword(),originalstudent.getPassword())){
+            return originalstudent;
         }
 
-        return passwordEncoder.matches( logindto.getPassword(),originalstudent.getPassword());
+        return null;
     }
 
 

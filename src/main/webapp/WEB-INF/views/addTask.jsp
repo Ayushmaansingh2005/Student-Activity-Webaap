@@ -20,14 +20,14 @@
         </div>
     </div>
 
-    <form action="/tasks/add" method="post">
+    <form action="handle_addTask" method="post">
         <div class="form-group">
             <label for="title">Task Title</label>
-            <input type="text" id="title" name="title" required placeholder="e.g., Finish Chapter 5 Math Problems">
+            <input type="text" id="title" name="task" required placeholder="e.g., Finish Chapter 5 Math Problems">
         </div>
         <div class="form-group">
             <label for="dueDate">Due Date</label>
-            <input type="date" id="dueDate" name="dueDate" required>
+            <input type="date" id="dueDate" name="date" required>
         </div>
 
         <div class="form-actions">
