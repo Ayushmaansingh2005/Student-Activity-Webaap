@@ -76,7 +76,7 @@ public class MainController {
 
         if(loggedin!=null){
             session.setAttribute("currentUser",loggedin);
-            return "activity";
+            return "redirect:/activity";
         }
         model.addAttribute("error","Wrong email or password try again !!!");
         return "index";

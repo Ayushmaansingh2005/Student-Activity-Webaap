@@ -14,7 +14,6 @@ public class Task {
     private Date date;
 
     @ManyToOne(fetch = FetchType.LAZY)
-
     @JoinColumn(name="student_id",referencedColumnName = "id")
     private Student student;
 

@@ -3,6 +3,7 @@ import StudentActivity.Model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,12 +18,17 @@ public class TaskDao {
         this.hibernateTemplate.save(task);
     }
 
-    public List<Task> showTask(){
+
+    @Transactional(readOnly = true)
+    public List<Task> showTaskById(int studentId) {
 
 
-        return task;
+        String hql = "FROM Task WHERE student.id = :studentId";
+        List<Task> tasks = (List<Task>) hibernateTemplate.findByNamedParam(hql, "studentId", studentId);
 
+        return tasks;
     }
+
 
 
 }

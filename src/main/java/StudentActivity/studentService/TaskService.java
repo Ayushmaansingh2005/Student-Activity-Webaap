@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class TaskService {
 
@@ -23,6 +25,10 @@ public class TaskService {
         newTask.setDate(taskDto.getDate());
         newTask.setStudent(student);
         taskDao.save(newTask);
+    }
+
+    public List<Task> showTask(int studentId){
+        return taskDao.showTaskById(studentId);
     }
 
 

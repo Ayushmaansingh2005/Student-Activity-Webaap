@@ -1,14 +1,18 @@
 package StudentActivity.controller;
 
 import StudentActivity.Model.Student;
+import StudentActivity.Model.Task;
 import StudentActivity.dto.TaskDto;
 import StudentActivity.studentService.TaskService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.List;
 
 @Controller
 public class TaskController {
@@ -17,7 +21,16 @@ public class TaskController {
     private TaskService taskService;
 
     @RequestMapping("/activity")
-    public String activityCenter(){
+    public String activityCenter(HttpSession session, Model model){
+        Student currentStudent = (Student) session.getAttribute("currentUser");
+
+        if(currentStudent==null){
+            return "index";
+        }
+        List<Task> currentTask= taskService.showTask(currentStudent.getId());
+        model.addAttribute("tasks",currentTask);
+        model.addAttribute("student",currentStudent);
+        //System.out.println(currentTask+" these are the current task of "+currentStudent.getId());
         return "activity";
     }
 
@@ -34,6 +47,7 @@ public class TaskController {
             return "index";
         }
         taskService.createtask(currentStudent,taskDto);
-        return "activity";
+        return "redirect:/activity";
     }
+
 }
