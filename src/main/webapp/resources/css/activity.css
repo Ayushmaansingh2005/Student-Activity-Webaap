@@ -146,15 +146,29 @@ input:checked + .slider:before { transform: translateX(26px); }
 .task-toggle-icon { transition: transform 0.3s; }
 .task-toggle-icon.collapsed { transform: rotate(-90deg); }
 
+/*
+ * Styles for the Task Progress Bar
+ */
+
+/* The container that holds the bar */
 .progress-container {
-  height: 8px;
-  background: #ddd;
-  border-radius: 4px;
-  overflow: hidden;
-  margin-bottom: 8px;
+    width: 100%;
+    background-color: #333; /* A dark grey background for the track */
+    border-radius: 10px;
+    margin: 8px 0;
+    height: 10px; /* Give the container a fixed height */
+    overflow: hidden; /* Ensures the inner bar respects the border-radius */
 }
 
-.progress-bar { height: 100%; background: var(--accent-color); }
+/* The actual progress bar that gets filled */
+.progress-bar {
+    height: 100%; /* Make the bar fill the container's height */
+    width: 0%; /* Start at 0% width; JavaScript will update this */
+    background-color: #ffc107; /* A nice yellow/amber color */
+    border-radius: 10px;
+    transition: width 0.4s ease-in-out; /* Smooth animation when the width changes */
+}
+
 .deadline { font-size: 13px; color: var(--subtext-color); }
 
 .add-task-btn {

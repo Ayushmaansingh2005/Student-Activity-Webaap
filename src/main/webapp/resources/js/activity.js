@@ -22,13 +22,68 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Page-Specific Logic for activity.jsp ---
-    // Check if we are on the activity page by looking for a specific element
-    const doughnutChartCanvas = document.getElementById('productivityDoughnutChart');
-    if (doughnutChartCanvas) {
+    const activityPageIdentifier = document.getElementById('productivityDoughnutChart');
+    if (activityPageIdentifier) {
+
+        console.log("Activity page script running."); // For debugging
+
+        const taskCards = document.querySelectorAll('.task-card');
+        console.log(`Found ${taskCards.length} task cards to process.`); // For debugging
+
+        taskCards.forEach((card, index) => {
+            const creationDateString = card.dataset.creationDate;
+            const dueDateString = card.dataset.dueDate;
+            const daysRemainingSpan = card.querySelector('.days-remaining');
+            const progressBar = card.querySelector('.progress-bar');
+
+            // --- Step 1: Robust Date Parsing ---
+            // The 'YYYY-MM-DD' format is not universally supported by new Date().
+            // Replacing hyphens with slashes makes it cross-browser compatible.
+            const creationDate = new Date(creationDateString.replace(/-/g, '/'));
+            const dueDate = new Date(dueDateString.replace(/-/g, '/'));
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); // Normalize today's date for accurate day comparison
+
+            // --- Step 2: Days Remaining Calculation ---
+            if (daysRemainingSpan && !isNaN(dueDate)) {
+                const differenceInMs = dueDate.getTime() - today.getTime();
+                const differenceInDays = Math.ceil(differenceInMs / (1000 * 60 * 60 * 24));
+
+                if (differenceInDays < 0) {
+                    daysRemainingSpan.textContent = 'Overdue';
+                    daysRemainingSpan.style.color = 'red';
+                } else if (differenceInDays === 0) {
+                    daysRemainingSpan.textContent = 'Due today';
+                } else if (differenceInDays === 1) {
+                    daysRemainingSpan.textContent = '1 day left';
+                } else {
+                    daysRemainingSpan.textContent = `${differenceInDays} days left`;
+                }
+            }
+
+            // --- Step 3: Progress Bar Calculation ---
+            if (progressBar && !isNaN(creationDate) && !isNaN(dueDate)) {
+                const totalDuration = dueDate.getTime() - creationDate.getTime();
+                const elapsedDuration = today.getTime() - creationDate.getTime();
+
+                let progressPercent = 0;
+                if (totalDuration > 0) { // Avoid division by zero
+                    progressPercent = (elapsedDuration / totalDuration) * 100;
+                }
+
+                // Clamp the value between 0 and 100
+                progressPercent = Math.min(100, Math.max(0, progressPercent));
+
+                progressBar.style.width = progressPercent + '%';
+            } else {
+                 console.log(`Skipping progress bar for Task #${index} due to invalid dates.`); // For debugging
+            }
+        });
 
         // --- Expand/Collapse Subtasks ---
         document.querySelectorAll('.task-header').forEach(header => {
-            header.addEventListener('click', () => {
+            header.addEventListener('click', (event) => {
+                if (event.target.classList.contains('days-remaining')) return;
                 const subtasksSection = header.parentElement.querySelector('.subtasks-section');
                 const icon = header.querySelector('.task-toggle-icon');
                 if (subtasksSection) {

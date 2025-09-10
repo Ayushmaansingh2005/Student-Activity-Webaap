@@ -12,6 +12,7 @@ public class Task {
     private int taskId;
     private String task;
     private Date date;
+    private Date creationDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="student_id",referencedColumnName = "id")
@@ -50,10 +51,19 @@ public class Task {
         this.student = student;
     }
 
-    public Task(int taskId, String task, Date date, Student student) {
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public Task(int taskId, String task, Date date, Date creationDate, Student student) {
         this.taskId = taskId;
         this.task = task;
         this.date = date;
+        this.creationDate = creationDate;
         this.student = student;
     }
 
@@ -67,6 +77,7 @@ public class Task {
                 "taskId=" + taskId +
                 ", task='" + task + '\'' +
                 ", date=" + date +
+                ", creationDate=" + creationDate +
                 ", student=" + student +
                 '}';
     }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -23,6 +24,7 @@ public class TaskService {
         Task newTask = new Task();
         newTask.setTask(taskDto.getTask());
         newTask.setDate(taskDto.getDate());
+        newTask.setCreationDate(new Date());
         newTask.setStudent(student);
         taskDao.save(newTask);
     }
