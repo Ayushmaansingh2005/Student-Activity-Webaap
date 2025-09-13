@@ -171,6 +171,7 @@ input:checked + .slider:before { transform: translateX(26px); }
 
 .deadline { font-size: 13px; color: var(--subtext-color); }
 
+
 .add-task-btn {
   width: 100%;
   padding: 15px;
