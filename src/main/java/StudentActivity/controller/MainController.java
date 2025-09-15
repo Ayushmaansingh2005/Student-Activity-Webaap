@@ -62,7 +62,6 @@ public class MainController {
                         System.out.println(student);
                         registrationService.AddDetails(student);
                         return "index";
-
     }
 
 
