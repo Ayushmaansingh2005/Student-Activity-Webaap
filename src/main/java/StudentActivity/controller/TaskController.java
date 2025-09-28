@@ -49,5 +49,4 @@ public class TaskController {
         taskService.createtask(currentStudent,taskDto);
         return "redirect:/activity";
     }
-
 }
