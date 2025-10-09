@@ -39,6 +39,7 @@ public class RegistratioDto {
     }
 
 
+
     @Override
     public String toString() {
         return "RegistratioDto{" +
