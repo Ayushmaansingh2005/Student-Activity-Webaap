@@ -38,6 +38,8 @@ public class RegistratioDto {
         this.confirmPassword = confirmPassword;
     }
 
+
+
     @Override
     public String toString() {
         return "RegistratioDto{" +
