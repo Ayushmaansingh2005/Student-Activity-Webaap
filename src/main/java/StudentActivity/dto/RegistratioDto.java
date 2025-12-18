@@ -37,9 +37,6 @@ public class RegistratioDto {
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
-
-
-
     @Override
     public String toString() {
         return "RegistratioDto{" +
