@@ -30,6 +30,7 @@ public class RegistratioDto {
         this.password = password;
     }
 
+
     public String getConfirmPassword() {
         return confirmPassword;
     }
