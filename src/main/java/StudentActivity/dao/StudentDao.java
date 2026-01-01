@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 @Repository
 public class StudentDao {
-
-
     @Autowired
     private HibernateTemplate hibernateTemplate;
 
